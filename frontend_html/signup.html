@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../static/css/signup.css">
+        
+        <title>
+            Commons || Signup
+        </title>
+
+        <style>
+            .jumbotron {
+                border-radius: 3rem;
+                background: #F1DAC4;
+                box-shadow: 10px 10px 50px #EBCBAD,
+                            -20px -20px 70px #FBF5EF;
+            }
+            .btn {
+                background: #74DCFE;
+                color: black;
+            }
+        </style>
+    </head>
+    <body style="background-color: #F1DAC4;">
+        <div class="container-fluid text-center" style="height: 15vh; background-color: #74DCFE;">
+            <br><br>
+            <h1>Welcome Coby!</h1>
+            Tell us a little more about you to provide accurate matches.
+        </div><br><br><br>
+        <div class="container">
+            <div class="container-fluid">
+                <div class="jumbotron">
+                    <h4>Add your interests:</h4><br>
+                    <form name="interests">
+                        <input type="checkbox" id="travel" name="travel" value="Travel">
+                        <label for="travel">Travel</label><br>
+                        <input type="checkbox" id="art" name="art" value="Art">
+                        <label for="art">Art</label><br>
+                        <input type="checkbox" id="sports" name="sports" value="Sports">
+                        <label for="sports">Sports</label><br>
+                        <input type="checkbox" id="reading" name="reading" value="Reading">
+                        <label for="reading">Reading</label><br>
+                        <input type="checkbox" id="music" name="music" value="Music">
+                        <label for="music">Music</label><br>
+                        <input type="checkbox" id="gym" name="gym" value="Gym">
+                        <label for="gym">Gym</label><br>
+                        <input type="text" id="interest" name="interest" placeholder="Enter an Interest">
+                        <input class="btn btn-primary" type="submit" value="Add Interest"/>
+                    </form>
+                </div>
+                <br><br><br><br><br>
+                <div class="jumbotron">
+                    <h4>Add your classes:</h4><br>
+                    <form name="interests">
+                        <input type="text" id="class" name="class" placeholder="Enter a Class">
+                        <input class="btn btn-primary" type="submit" value="Add Class"/>
+                        <br><br>
+                        <ul>
+                            <li>CS 2112: Object-Oriented Design Data Structures Honors</li>
+                            <li>Other classes that have been typed in and added...</li>
+                        </ul>
+                    </form>
+                </div>
+                <br><br><br><br><br>
+                <div class="jumbotron">
+                    <h4>Add your clubs:</h4><br>
+                    <form name="interests">
+                        <input type="text" id="club" name="club" placeholder="Enter a Club">
+                        <input class="btn btn-primary" type="submit" value="Add Club"/>
+                        <br><br>
+                        <ul>
+                            <li>Chinese Student Association</li>
+                            <li>DTI</li>
+                            <li>Other clubs that have been typed in and added...</li>
+                        </ul>
+                    </form>
+                </div>
+                <br><br><br>
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Finish Signup" onclick="location.href='home.html'"/>
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </body>
+</html>

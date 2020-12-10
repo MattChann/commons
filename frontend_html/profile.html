@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../static/css/profile.css">
+        
+        <title>
+            Matthew's Profile
+        </title>
+
+        <style>
+            .jumbotron {
+                border-radius: 3rem;
+                background: #F1DAC4;
+                box-shadow: 10px 10px 50px #EBCBAD,
+                            -20px -20px 70px #FBF5EF;
+            }
+            .btn {
+                background: #74DCFE;
+                color: black;
+            }
+            img {
+                border-radius: 80%;
+                height: 25vh; 
+                width: auto;
+            }
+            #messageButton {
+                font-size: 1em;
+                font-weight: normal;
+
+            }
+            .common {
+                color: #8e4585;
+                font-size: larger;
+            }
+            .container{
+                margin: auto;
+                width: 50%;
+            }
+
+        </style>
+        <script>
+            function showContact() {
+              document.getElementById("messageButton").innerHTML = "mc000@cornell.edu";
+            }
+        </script>
+    </head>
+    <body style="background-color: #F1DAC4;">
+        <div class="container-fluid text-center" style="height: 25vh; background-color: #74DCFE;">
+            <br><br>
+            <img src="https://scontent-lga3-2.xx.fbcdn.net/v/t1.0-9/120621308_1433571566853167_6019267858867730354_n.jpg?_nc_cat=110&ccb=2&_nc_sid=09cbfe&_nc_ohc=tSIaOcDxDGQAX9b2Tde&_nc_ht=scontent-lga3-2.xx&oh=816d67a59537a1cdb9ab6181ef900a35&oe=5FEB3347" alt="Matthew's Photo">
+            <h1>Matthew Chan</h1> <div id="messageButton"><input class="btn btn-primary" type="submit" value="Message" onclick="showContact()"/></div>
+        </div><br><br><br><br><br>
+        <div class="container">
+            <div class="container-fluid">
+                <br><br>
+                <h4>Matthew takes...</h4>
+                <ul><span title="Coming soon: click to view class members">
+                    <li><a href="">CS 2112: Object-Oriented Design Data Structures Honors</a></li>
+                    <li>HE 4001: Underwater Basket Weaving (Advanced)</li>
+                </span></ul>
+                <br>
+                <h4>Matthew has taken...</h4>
+                <ul><span title="Coming soon: click to view class members">
+                    <li>CS 2110: Object-Oriented Design Data Structures</li>
+                    <li class="common" title="You have this in common">HE 3050: Introduction to Underwater Home Economics</li>
+                    <li>MP 101: The life, loves and becoming of Martha Pollack</li>
+                </span></ul>
+                <br>
+                <h4>Clubs</h4>
+                <ul>
+                    <li>CCUBW: Cornell Competetive Underwater Basket Weavers</li>
+                    <li class="common" title="You have this in common">Chinese Student Association</li>
+                    <li>World Tea Club</li>
+                </ul>
+                <br>
+                <h4>Interests</h4>
+                <ul>
+                    <li>Skiing</li>
+                    <li class="common" title="You have this in common">Computer Science</li>
+                    <li>Dumpling Parties</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
