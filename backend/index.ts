@@ -16,54 +16,66 @@ const users = db.collection('users');
 
 
 type User = {
+    id: string,
     name: string,
     email: string,
+    photo: string,
     interests: string[],
     classes: string[],
     clubs: string[],
 };
 
+const removeId = ({name, email, photo, interests, classes, clubs}: User) => {
+    return {
+        name: name,
+        email: email,
+        photo: photo,
+        interests: interests,
+        classes: classes,
+        clubs: clubs,
+    };
+};
+
 // Create new user
 app.post('/addUser', (req, res) => {
     const user: User = req.body;
-    const newDoc = users.doc();
-    newDoc.set(user);
+    const newDoc = users.doc(user.id);
+    newDoc.set(removeId(user));
     res.send(newDoc.id);
 });
-
-type UserWithID = User & {
-    id: string,
-};
 
 // Get user info
 app.get('/getUser', async (req, res) => {
     const id: string = req.query.id as string;
-    const doc = await users.doc(id).get();
-    const user: UserWithID = doc.data() as UserWithID;
-    user.id = doc.id;
-    res.send(user);
+    users.doc(id).get()
+        .then(doc => {
+            const user: User = doc.data() as User;
+            user.id = doc.id;
+            res.send(user);
+        })
+        .catch((err) => res.send(null));
 });
 
 // Update a user
 app.post('/updateUser', async (req, res) => {
-    const updatedUser: UserWithID = req.body;
-    await users.doc(updatedUser.id).update(updatedUser as User);
+    const updatedUser: User = req.body;
+    await users.doc(updatedUser.id).update(removeId(updatedUser));
     res.send(updatedUser.id);
 });
 
 // Get recommended users
 app.post('/getCommon', async (req, res) => {
-    const currUser: UserWithID = req.body;
+    const currUser: User = req.body;
     const allDocs = await users.orderBy('name', 'asc').get();
-    const allUsers: UserWithID[] = [];
+    const allUsers: User[] = [];
     for (const doc of allDocs.docs) {
-        let thisUser: UserWithID = doc.data() as UserWithID;
+        let thisUser: User = doc.data() as User;
         thisUser.id = doc.id;
         allUsers.push(thisUser);
     };
-    const commonInterests: UserWithID[] = allUsers.filter(user => user.interests.some(interest => currUser.interests.includes(interest)));
-    const commonClasses: UserWithID[] = allUsers.filter(user => user.classes.some(currClass => currUser.classes.includes(currClass)));
-    const commonClubs: UserWithID[] = allUsers.filter(user => user.clubs.some(club => currUser.clubs.includes(club)));
+    const commonInterests: User[] = allUsers.filter(user => user.interests.some(interest => currUser.interests.includes(interest)));
+    const commonClasses: User[] = allUsers.filter(user => user.classes.some(currClass => currUser.classes.includes(currClass)));
+    const commonClubs: User[] = allUsers.filter(user => user.clubs.some(club => currUser.clubs.includes(club)));
     res.send([...commonInterests, ...commonClasses, ...commonClubs].filter(user => user.id !== currUser.id));
 });
 
