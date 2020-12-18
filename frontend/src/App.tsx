@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import 'firebase/auth';
 import firebase from 'firebase/app';
 import {
     BrowserRouter as Router,
@@ -11,6 +10,8 @@ import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
 import Landing from './Landing';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBsyhx3Kbr_vokOxZNevJA2HITCiF5V7i8",

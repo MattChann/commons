@@ -1,5 +1,5 @@
 import * as express from 'express';
-import admin from 'firebase-admin';
+import * as admin from 'firebase-admin';
 
 const serviceAccount = require('./service-account.json');
 
@@ -71,6 +71,17 @@ app.get('/getUser', async (req, res) => {
 //     res.send(updatedUser.id);
 // });
 
+const filterUsers = (list: User[]): User[] => {
+    const idLinks = {};
+    list.map(user => {
+        if (!(user.id in idLinks)) {
+            idLinks[user.id] = user;
+        };
+    });
+    console.log(idLinks);
+    return Object.values(idLinks);
+};
+
 // Get recommended users
 app.post('/getCommon', async (req, res) => {
     const currUser: User = req.body;
@@ -84,7 +95,8 @@ app.post('/getCommon', async (req, res) => {
     const commonInterests: User[] = allUsers.filter(user => user.interests.some(interest => currUser.interests.includes(interest)));
     const commonClasses: User[] = allUsers.filter(user => user.classes.some(currClass => currUser.classes.includes(currClass)));
     const commonClubs: User[] = allUsers.filter(user => user.clubs.some(club => currUser.clubs.includes(club)));
-    res.send([...commonInterests, ...commonClasses, ...commonClubs].filter(user => user.id !== currUser.id));
+    const joint = [...commonInterests, ...commonClasses, ...commonClubs].filter(user => user.id !== currUser.id);
+    res.send(filterUsers(joint));
 });
 
 // Delete a user
