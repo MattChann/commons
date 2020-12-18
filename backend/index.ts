@@ -1,5 +1,5 @@
 import * as express from 'express';
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 
 const serviceAccount = require('./service-account.json');
 
@@ -37,11 +37,19 @@ const removeId = ({name, email, photo, interests, classes, clubs}: User) => {
 };
 
 // Create new user
-app.post('/addUser', (req, res) => {
-    const user: User = req.body;
-    const newDoc = users.doc(user.id);
-    newDoc.set(removeId(user));
-    res.send(newDoc.id);
+app.post('/addUser', async (req, res) => {
+    admin
+        .auth()
+        .verifyIdToken(req.headers.idtoken as string)
+        .then(async () => {
+            const user: User = req.body;
+            const newDoc = users.doc(user.id);
+            newDoc.set(removeId(user));
+            res.send(newDoc.id);
+        })
+        .catch(() => {
+            console.log('Authentication Error')
+        });
 });
 
 // Get user info
@@ -57,11 +65,11 @@ app.get('/getUser', async (req, res) => {
 });
 
 // Update a user
-app.post('/updateUser', async (req, res) => {
-    const updatedUser: User = req.body;
-    await users.doc(updatedUser.id).update(removeId(updatedUser));
-    res.send(updatedUser.id);
-});
+// app.post('/updateUser', async (req, res) => {
+//     const updatedUser: User = req.body;
+//     await users.doc(updatedUser.id).update(removeId(updatedUser));
+//     res.send(updatedUser.id);
+// });
 
 // Get recommended users
 app.post('/getCommon', async (req, res) => {
@@ -80,11 +88,11 @@ app.post('/getCommon', async (req, res) => {
 });
 
 // Delete a user
-app.delete('/deleteUser', async (req, res) => {
-    const id: string = req.query.id as string;
-    await users.doc(id).delete();
-    res.send('Successfully deleted user');
-});
+// app.delete('/deleteUser', async (req, res) => {
+//     const id: string = req.query.id as string;
+//     await users.doc(id).delete();
+//     res.send('Successfully deleted user');
+// });
 
 
 
