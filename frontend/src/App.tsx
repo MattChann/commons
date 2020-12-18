@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'firebase/auth';
 import firebase from 'firebase/app';
-import axios from 'axios';
 import {
     BrowserRouter as Router,
     Switch,
@@ -26,18 +25,16 @@ firebase.initializeApp(firebaseConfig);
 
 function App() {
     const [currUser, setCurrUser] = useState<firebase.User | null>(null);
-    const [firstLogin, setFirstLogin] = useState<boolean>(false);
 
     function onAuthStateChange() {
         return firebase.auth().onAuthStateChanged((user) => {
             setCurrUser(user);
-            if (user) {
-                axios.get(`/getUser?id=${user.uid}`)
-                    .then(userData => setFirstLogin(!Boolean(userData)));
-            } else {
-                setFirstLogin(false);
-            };
         });
+    };
+
+    const logout = () => {
+        firebase.auth().signOut()
+            .then(() => setCurrUser(null));
     };
 
     useEffect(() => onAuthStateChange(), []);
@@ -46,18 +43,16 @@ function App() {
         <Router>
             <Switch>
                 <Route path="/home">
-                    {currUser && (<Home currUser={currUser}/>)}
-                    {!currUser && (<Redirect to="/login"/>)}
+                    {currUser && <Home currUser={currUser} logout={logout}/>}
+                    {!currUser && <Redirect to="/login"/>}
                 </Route>
                 <Route path="/login">
-                    {!currUser && (<Login/>)}
-                    {(currUser && firstLogin) && (<Redirect to="/signup"/>)}
-                    {(currUser && !firstLogin) && (<Redirect to="/home"/>)}
+                    {!currUser && <Login/>}
+                    {currUser && <Redirect to="/signup"/>}
                 </Route>
                 <Route path="/signup">
-                    {firstLogin && (<Signup/>)}
-                    {!firstLogin && (<Redirect to="/home"/>)}
-                    {!currUser && (<Redirect to="/login"/>)}
+                    {currUser && <Signup currUser={currUser}/>}
+                    {!currUser && <Redirect to="/login"/>}
                 </Route>
                 <Route path="/">
                     <Landing/>
