@@ -1,5 +1,7 @@
 import * as express from 'express';
 import * as admin from 'firebase-admin';
+import * as cors from 'cors';
+import * as path from 'path';
 
 const serviceAccount = require('./service-account.json');
 
@@ -10,6 +12,8 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const app = express();
+app.use(cors());
+app.use(express.static(path.join(__dirname, '../../frontend/build')));
 app.use(express.json());
 
 const users = db.collection('users');
@@ -72,7 +76,7 @@ app.get('/getUser', async (req, res) => {
 // });
 
 const filterUsers = (list: User[]): User[] => {
-    const idLinks = {};
+    const idLinks: Record<string, User> = {};
     list.map(user => {
         if (!(user.id in idLinks)) {
             idLinks[user.id] = user;
@@ -106,8 +110,9 @@ app.post('/getCommon', async (req, res) => {
 //     res.send('Successfully deleted user');
 // });
 
+app.get('*', (_, response) => response.sendFile(path.join(__dirname, '../../frontend/build/index.html')));
 
-
-app.listen(8080, function() {
-    console.log("Server started");
-});
+// app.listen(8080, function() {
+//     console.log("Server started");
+// });
+app.listen(process.env.PORT || 8080, () => console.log('Backend started'));
